@@ -22,6 +22,7 @@ from geometry_msgs.msg import WrenchStamped
 from contact_analysis import contact_cop_impl
 from copy import deepcopy
 
+
 # todo set a function to write correctly the name
 class ContactCopROS(object):
     """
@@ -89,6 +90,8 @@ class ContactCopROS(object):
         data = deepcopy(self.component_data_)
         self.set_all_output_read()
         self.component_implementation_.update(data, config)
+        if rospy.has_param('/publish_cop'):
+            data.out_cop_active = rospy.get_param('/publish_cop')
 
         try:
             self.component_data_.out_cop_active = data.out_cop_active
@@ -118,5 +121,5 @@ def main():
         rospy.logfatal("{}".format(node.component_config_))
         return
 
-    rospy.Timer(rospy.Duration(1.0 / 1000), node.update)
+    rospy.Timer(rospy.Duration(1.0 / 50), node.update)
     rospy.spin()

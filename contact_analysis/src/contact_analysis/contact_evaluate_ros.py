@@ -119,5 +119,5 @@ def main():
         rospy.logfatal("{}".format(node.component_config_))
         return
 
-    rospy.Timer(rospy.Duration(1.0 / 1000), node.update)
+    rospy.Timer(rospy.Duration(1.0 / 50), node.update)
     rospy.spin()
